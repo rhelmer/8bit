@@ -10,6 +10,12 @@ function drawGrid(ctx, size) {
     ctx.strokeStyle = "#eee";
     ctx.stroke();
 }
+
+function saveImage() {
+    var img = canvas.toDataURL('image/png');
+    document.write('<img src=' + img + ' alt="from canvas"/>');
+}
+
 function main() {
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
@@ -26,10 +32,24 @@ function main() {
         mouse.y = evt.offsetY;
     });
     addEventListener('click', function() {
-        var x = Math.floor(mouse.x / size) * size;
-        var y = Math.floor(mouse.y / size) * size;
-        ctx.fillRect(x, y, size, size);
-        console.log('click:', x, y);
+        var x = (Math.floor(mouse.x / size) * size) + 1;
+        var y = (Math.floor(mouse.y / size) * size) + 1;
+
+        var pixel = ctx.getImageData(mouse.x, mouse.y, size-1, size-1).data;
+        pixel = ctx.getImageData(mouse.x, mouse.y, size-1, size-1).data;
+        if (pixel[0] != 1) {
+            ctx.fillStyle = 'rgba(1,1,1,1)';
+        } else {
+            ctx.fillStyle = 'rgba(255,255,255,1)';
+        }
+        ctx.fillRect(x, y, size-1, size-1);
     }, false);
+
+    var saveButton = document.getElementById('save');
+    if (saveButton.addEventListener) {
+        saveButton.addEventListener('click', saveImage, false);
+    } else if (saveButton.attachEvent) {
+        saveButton.attachEvent('onclick', saveImage);
+    }
 }
 window.onload = main;
