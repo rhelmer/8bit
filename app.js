@@ -12,7 +12,14 @@ function drawGrid(ctx, size) {
 }
 
 function saveImage() {
-    window.location = canvas.toDataURL('image/png');
+    //window.location = canvas.toDataURL('image/png');
+    var img = document.createElement('img');
+    img.src = canvas.toDataURL('image/png');
+
+    var frames = document.getElementById('frames');
+    img.height = 64;
+    img.width = 64;
+    frames.appendChild(img);
 }
 
 function main() {
