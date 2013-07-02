@@ -31,7 +31,7 @@ function main() {
         mouse.x = evt.offsetX;
         mouse.y = evt.offsetY;
     });
-    addEventListener('click', function() {
+    canvas.addEventListener('click', function() {
         var x = (Math.floor(mouse.x / size) * size) + 1;
         var y = (Math.floor(mouse.y / size) * size) + 1;
 
